@@ -64,7 +64,7 @@ public class CartController {
 
     @CrossOrigin
     @DeleteMapping("/cart/{id}")
-    @ApiOperation(value = "删除购物车", notes = "根据url的id来清空指定用户购物车")
+    @ApiOperation(value = "删除购物车", notes = "根据url的userid来清空指定用户购物车")
     public Model delete(@PathVariable String id) {
         //需要查找用户是否存在
         Cart cart = new Cart(Integer.parseInt(id), null, null, null, null);

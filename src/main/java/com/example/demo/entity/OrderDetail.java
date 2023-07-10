@@ -3,31 +3,26 @@ package com.example.demo.entity;
 public class OrderDetail {
     Integer orderId;
     Integer productId;
+    Integer size;
+    String color;
     Integer productQuantity;
     Double productPrice;
 
     public OrderDetail() {
     }
 
-    @Override
-    public String toString() {
-        return "OrderDetail{" +
-                "orderId=" + orderId +
-                ", productId=" + productId +
-                ", productQuantity=" + productQuantity +
-                ", productPrice=" + productPrice +
-                '}';
-    }
-
-    public OrderDetail(Integer orderId, Integer productId, Integer productQuantity, Double productPrice) {
-        this.orderId = orderId;
-        this.productId = productId;
-        this.productQuantity = productQuantity;
-        this.productPrice = productPrice;
-    }
-
     public Integer getOrderId() {
         return orderId;
+    }
+
+    public OrderDetail(Integer orderId, Integer productId, Integer size, String color, Integer productQuantity,
+                       Double productPrice) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.size = size;
+        this.color = color;
+        this.productQuantity = productQuantity;
+        this.productPrice = productPrice;
     }
 
     public void setOrderId(Integer orderId) {
@@ -40,6 +35,22 @@ public class OrderDetail {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Integer getProductQuantity() {

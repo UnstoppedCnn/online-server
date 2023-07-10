@@ -77,7 +77,8 @@ public class CartImpl implements CartService {
         /**
          *将购物车所有的商品都加入到订单详情中
          */
-        orderForm = orderFormMapper.searchanything(orderForm);
+        List<OrderForm> orderForms = orderFormMapper.searchanything(orderForm);
+        orderForm = orderForms.get(0);
         for (int i = 0; i < carts.size(); i++) {
             product.setProductId(cart.getProductId());
             Product product1 = productMapper.getProductInfoById(product);

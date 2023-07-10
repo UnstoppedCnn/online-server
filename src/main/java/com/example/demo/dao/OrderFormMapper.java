@@ -10,7 +10,7 @@ public interface OrderFormMapper {
     @Select("select * from orderform")
     public List<OrderForm> getAll();
 
-    @Insert("insert into orderform values (#{orderId},#{userName},#{shippingAddress},#{integral},#{orderStatus},#{creationTime},#{paymentTime},#{removalTime},#{endTime})" )
+    @Insert("insert into orderform values (null,#{userName},#{shippingAddress},#{integral},#{orderStatus},#{creationTime},#{paymentTime},#{removalTime},#{endTime})")
     boolean add(OrderForm orderForm);//返回值为插入几条记录
 
     @Update("update orderform where orderId=#{orderId} set userName=#{userName},shippingAddress=#{shippingAddress},integral=#{integral},orderStatus=#{orderStatus},creationTime=#{creationTime},paymentTime=#{paymentTime},removalTime=#{removalTime},endTime=#{endTime} where orderId=#{orderId}")
@@ -33,5 +33,5 @@ public interface OrderFormMapper {
             "and orderStaus=#{orderStatus}" +
             "</if>" +
             "</stript>")
-    OrderForm searchanything(OrderForm orderForm);
+    List<OrderForm> searchanything(OrderForm orderForm);
 }

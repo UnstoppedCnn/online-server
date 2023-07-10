@@ -25,6 +25,9 @@ public class UserController {
         if (user == null)
             return new Model(-1, "重新输入");
         User user1 = userImpl.searchUserByPwdAndUname(user);
+        if (user1 == null) {
+            return new Model(-1, "没有找到该账号");
+        }
         if (!Objects.equals(user1.getPassword(), user.getPassword())) {
             return new Model(-1, "输入密码有误");
         }
@@ -44,6 +47,9 @@ public class UserController {
     @PostMapping("/user")
     @ApiOperation(value = "添加用户", notes = "根据user对象来创建用户")
     public Model save(@RequestBody User user) {
+        if (user.getUserName() == null || user.getPassword() == null) {
+            return new Model(0, "请输入正确的信息");
+        }
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if (user == null)
             return new Model(-1, "请输入正确的信息");
@@ -54,7 +60,7 @@ public class UserController {
         user.setUpdateTime(timestamp);
         userImpl.userRegister(user);
         User user2 = userImpl.searchUserByPwdAndUname(user);
-        return new Model(1, "注册成功，祝您有个良好的购物体验", user2.getUserId());
+        return new Model(1, "注册成功，祝您有个良好的购物体验", user2);
     }
 
     @CrossOrigin

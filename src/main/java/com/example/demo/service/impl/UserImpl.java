@@ -30,8 +30,8 @@ public class UserImpl implements UserService {
 
     @Override
     public boolean userRegister(User user) {
-        User user1 = userMapper.searchById(user.getUserId());
-        boolean value=false;
+        User user1 = userMapper.searchByName(user);
+        boolean value = false;
         if(user1!=null){
             return false;
         }

@@ -12,7 +12,7 @@ public interface OrderFormService {
 
     boolean deleteOrderFormByAnything(OrderForm orderForm);
 
-    boolean createOrderInCart(OrderForm orderForm);
+    boolean createOrderInCart(String userName, Integer addressId);
 
-    boolean createOrderByInstance(OrderForm orderForm, ProductDetail productDetail);
+    boolean createOrderByInstance(String userName, ProductDetail productDetail, Integer addressId);
 }

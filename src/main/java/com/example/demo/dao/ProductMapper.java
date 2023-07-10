@@ -44,13 +44,16 @@ public interface ProductMapper {
 
 
     //更新
-  @Update("update product set productType=#{productType},brand=#{brand}," +
-          "productName=#{productName},itemNo=#{itemNo},originalPrice=#{originalPrice},currentPrice=#{currentPrice}," +
-          "productImg=#{productImg},productAddress=#{productAddress},sex=#{sex},status=#{status} " +
-          "where productId=#{productId}")
+    @Update("update product set productType=#{productType},brand=#{brand}," +
+            "productName=#{productName},itemNo=#{itemNo},originalPrice=#{originalPrice},currentPrice=#{currentPrice}," +
+            "productImg=#{productImg},productAddress=#{productAddress},sex=#{sex},status=#{status} " +
+            "where productId=#{productId}")
     public int update(Product pro);
 
-  @Select("select * from product where productId=#{productId} ")
-      //public Product searchById(int productId);
-  Product getProductInfoById(Product product);
+    @Select("select * from product where productId=#{productId} ")
+        //public Product searchById(int productId);
+    Product getProductInfoById(Product product);
+
+    @Select("select productName,brand from product where productId=#{productId}")
+    public Product selectForFront(Product product);
 }

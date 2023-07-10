@@ -39,11 +39,7 @@ public class ProductDetailImpl implements ProductDetailService {
             return false;
         }
         productDetailMapper.deleteProductDetailByAnything(productDetail);
-        if(productDetail.getSize()==null&&productDetail.getColor()==null){
-            Product product=new Product();
-            product.setProductId(productDetail.getProductId());
-            productMapper.delete(product);
-        }
+
         return true;
     }
 

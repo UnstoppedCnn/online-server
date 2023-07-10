@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Address;
 import com.example.demo.entity.OrderForm;
 import com.example.demo.entity.ProductDetail;
 import com.example.demo.model.Model;
+import com.example.demo.service.OrderFormService;
 import com.example.demo.service.impl.OrderFormImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,12 +21,10 @@ public class OrederFormController {
     OrderFormImpl orderFormImpl;
 
     @CrossOrigin
-    @PutMapping("/order/{id}")
+    @PutMapping("/order")
     @ApiOperation(value = "更新订单信息", notes = "根据json中的信息更新订单数据")
     public Model update(@PathVariable OrderForm orderForm) {
         Integer integer = orderForm.getOrderStatus();
-        if (orderForm == null)
-            return new Model(-1, "输入错误，请重新输入");
         OrderForm orderForm1 = orderFormImpl.searchById(orderForm.getOrderId());
         if (orderForm1 == null)
             return new Model(-1, "未找到此订单");
@@ -43,16 +43,16 @@ public class OrederFormController {
     @CrossOrigin
     @PostMapping("/orders")
     @ApiOperation(value = "生成订单", notes = "清除购物车的所有商品")
-    public Model createOrderByCart(@RequestBody OrderForm orderForm) {
-        orderFormImpl.createOrderInCart(orderForm);
+    public Model createOrderByCart(@RequestBody String userName, @RequestBody Integer addressId) {
+        orderFormImpl.createOrderInCart(userName, addressId);
         return new Model<>(1, "删除成功");
     }
 
     @CrossOrigin
     @PostMapping("/order")
     @ApiOperation(value = "立即购买并生成订单", notes = "将当前选中的物品申城订单")
-    public Model createOrderByInstance(@RequestBody OrderForm orderForm, @RequestBody ProductDetail productDetail) {
-        orderFormImpl.createOrderByInstance(orderForm, productDetail);
+    public Model createOrderByInstance(@RequestBody String userName, @RequestBody ProductDetail productDetail, @RequestBody int addressId) {
+        orderFormImpl.createOrderByInstance(userName, productDetail, addressId);
         return new Model<>(1, "删除成功");
     }
 }
