@@ -3,10 +3,13 @@ package com.example.demo.service;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserService {
     /**
      * 用户登录 成功返回true 失败返回 false
+     *
      * @param user
      * @return boolean
      */
@@ -41,8 +44,13 @@ public interface UserService {
 
     /**
      * 为用户自己使用的查询用户信息
+     *
      * @param user
      * @return
      */
     User searchUser(User user);
+
+    List<User> getAll();
+
+    User searchUserByPwdAndUname(User user);
 }

@@ -22,6 +22,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
+    @CrossOrigin
     @GetMapping("/address/{id}")
     @ApiOperation(value = "获取用户地址", notes = "根据url的id来获取指定用户收货地址信息")
     public Model<List<Address>> getAll(@PathVariable String id) {
@@ -34,7 +35,8 @@ public class AddressController {
         return new Model<>(200, "成功", addressService.get(Integer.parseInt(id)));
     }
 
-    @PutMapping("/address")
+    @CrossOrigin
+    @PutMapping("/address/{id}")
     @ApiOperation(value = "更新用户地址", notes = "更新地址信息")
     public Model<Address> update(@RequestBody Address address) {
         if (address == null) {
@@ -46,6 +48,7 @@ public class AddressController {
         return new Model<>(200, "成功");
     }
 
+    @CrossOrigin
     @PostMapping("/address")
     @ApiOperation(value = "添加地址", notes = "添加用户的地址")
     public Model<Address> save(@RequestBody Address address) {
@@ -54,9 +57,11 @@ public class AddressController {
         } else if (!addressService.save(address)) {
             return new Model<>(500, "请求参数错误");
         }
+        addressService.save(address);
         return new Model<>(200, "成功");
     }
 
+    @CrossOrigin
     @DeleteMapping("/address/{id}")
     @ApiOperation(value = "删除地址", notes = "根据url的addressId来删除指定地址")
     public Model<Address> delete(@PathVariable String id) {

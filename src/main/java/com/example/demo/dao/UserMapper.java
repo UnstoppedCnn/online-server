@@ -20,4 +20,9 @@ public interface UserMapper {
     @Select("select * from user where userId=#{userId}")
     User searchById(int userId);
 
+    @Select("select * from user where userName=#{userName} and password=#{password}")
+    User searchByNameAndPwd(User user);
+
+    @Select("select * from user where userName=#{userName}")
+    User searchByName(User user);
 }

@@ -51,6 +51,6 @@ public interface ProductMapper {
     public int update(Product pro);
 
   @Select("select * from product where productId=#{productId} ")
-    //public Product searchById(int productId);
-    List<Product> get(Product product);
+      //public Product searchById(int productId);
+  Product getProductInfoById(Product product);
 }

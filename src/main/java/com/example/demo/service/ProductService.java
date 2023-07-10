@@ -32,4 +32,5 @@ public interface ProductService {
      */
     boolean delete(Product product);
 
+    Product getProductInfo(Product product);
 }

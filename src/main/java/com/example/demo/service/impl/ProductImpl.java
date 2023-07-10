@@ -4,7 +4,6 @@ import com.example.demo.dao.ProductDetailMapper;
 import com.example.demo.dao.ProductMapper;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductDetail;
-import com.example.demo.service.ProductDetailService;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,15 @@ public class ProductImpl implements ProductService {
 
     @Override
     public boolean delete(Product product) {
-        return productMapper.delete(product) > 0?true:false;
+        return productMapper.delete(product) > 0 ? true : false;
+    }
+
+    @Override
+    public Product getProductInfo(Product product) {
+        if (product == null)
+            return null;
+
+        return productMapper.getProductInfoById(product);
     }
 
     @Override
@@ -43,8 +50,12 @@ public class ProductImpl implements ProductService {
 
     @Override
     public List<ProductDetail> get(Product product) {
-        ProductDetail productDetail=new ProductDetail();
+        ProductDetail productDetail = new ProductDetail();
         productDetail.setProductId(product.getProductId());
         return productDetailMapper.searchProductDetail(productDetail);
+    }
+
+    public Product getProduct(Product product) {
+        return productMapper.getProductInfoById(product);
     }
 }

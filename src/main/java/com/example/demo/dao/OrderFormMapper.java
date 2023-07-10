@@ -19,7 +19,7 @@ public interface OrderFormMapper {
     @Delete("delete from orderform where orderId=#{orderId}")
     boolean delete(OrderForm orderForm);
 
-    @Select("select * from orderform where i=1 <script>" +
+    @Select("select * from orderform where 1=1 <script>" +
             "<if test=\"userName!=null and userName!=''\">" +
             "and userName=#{userName}" +
             "</if>" +

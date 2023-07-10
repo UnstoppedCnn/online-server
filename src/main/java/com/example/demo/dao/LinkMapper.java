@@ -10,8 +10,8 @@ public interface LinkMapper {
     @Select("select * from Link")
     List<Link> getAll();
 
-    @Insert("        INSERT INTO link (linkName, linkURL, linkPrice, linkType, creationTime)\n" +
-            "        VALUES (#{linkName}, #{linkURL}, #{linkPrice}, #{linkType}, #{creationTime})" )
+    @Insert("        INSERT INTO link (linkName, linkURL, linkPrice, linkType, creationTime ,endTime)\n" +
+            "        VALUES (#{linkName}, #{linkURL}, #{linkPrice}, #{linkType}, #{creationTime},#{endTime})")
     boolean add(Link link);
 
     @Delete("delete from link where linkId=#{linkId}")

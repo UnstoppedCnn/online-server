@@ -9,7 +9,12 @@ import java.util.List;
 @Service
 public interface CartService {
     boolean addProductToCart(Cart cart, ProductDetail productDetail);
+
     List<Cart> getCartInfo(Cart cart);
+
     Integer createOrder(Cart cart, Address address);
+
     boolean deleteCart(Cart cart);
+
+    boolean update(Cart cart);
 }

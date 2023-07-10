@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.*;
 import com.example.demo.dao.*;
 import com.example.demo.service.CartService;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,42 +50,56 @@ public class CartImpl implements CartService {
     @Override
     public Integer createOrder(Cart cart,Address address) {
         boolean value;
-        if(cart==null){
+        if (cart == null) {
             return null;
         }
-        OrderDetail orderDetail=new OrderDetail();
-        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
-        Product product=new Product();
-        User user1=userMapper.searchById(cart.getUserId());
-        List<Cart> carts=cartMapper.searchById(cart.getUserId());
-        address=addressMapper.select(address.getAddressId());
-        Integer temp=0;
-        for (int i=0;i<carts.size();i++){
+        OrderDetail orderDetail = new OrderDetail();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Product product = new Product();
+        User user1 = userMapper.searchById(cart.getUserId());
+        List<Cart> carts = cartMapper.searchById(cart.getUserId());
+        address = addressMapper.select(address.getAddressId());
+        /**
+         * 计算积分
+         */
+        Integer temp = 0;
+        for (int i = 0; i < carts.size(); i++) {
             product.setProductId(cart.getProductId());
-            List<Product> products=productMapper.get(product);
-            temp+=Integer.parseInt(products.get(0).getCurrentPrice())*cart.getSum();
+            Product product1 = productMapper.getProductInfoById(product);
+            temp += Integer.parseInt(product1.getCurrentPrice()) * cart.getSum();
         }
-
-        OrderForm orderForm=new OrderForm(0,user1.getUserName(),address.getSpecificAddress(),temp,1,
-                timestamp,null,null,null);
+        /**
+         * 新建订单并初始化个性数据
+         */
+        OrderForm orderForm = new OrderForm(0, user1.getUserName(), address.getSpecificAddress(), temp, 1,
+                timestamp, null, null, null);
         orderFormMapper.add(orderForm);
-        orderForm=orderFormMapper.searchanything(orderForm);
-        for(int i=0;i<carts.size();i++){
+        /**
+         *将购物车所有的商品都加入到订单详情中
+         */
+        orderForm = orderFormMapper.searchanything(orderForm);
+        for (int i = 0; i < carts.size(); i++) {
             product.setProductId(cart.getProductId());
-            List<Product> products=productMapper.get(product);
+            Product product1 = productMapper.getProductInfoById(product);
             orderDetail.setOrderId(orderForm.getOrderId());
             orderDetail.setProductId(carts.get(i).getProductId());
             orderDetail.setProductQuantity(carts.get(i).getSum());
-            orderDetail.setProductPrice(Double.parseDouble(products.get(i).getCurrentPrice()));
+            orderDetail.setProductPrice(Double.parseDouble(product1.getCurrentPrice()) * carts.get(i).getSum());
         }
         return 1;
     }
 
     @Override
     public boolean deleteCart(Cart cart) {
-        if(cart==null)
+        if (cart == null)
             return false;
-        boolean value=cartMapper.delete(cart);
+        boolean value = cartMapper.delete(cart);
+        return value;
+    }
+
+    @Override
+    public boolean update(Cart cart) {
+        boolean value = cartMapper.update(cart);
         return value;
     }
 }

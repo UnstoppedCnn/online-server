@@ -8,6 +8,7 @@ import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UserImpl implements UserService {
@@ -66,9 +67,21 @@ public class UserImpl implements UserService {
 
     @Override
     public User searchUser(User user) {
-        if(user==null)
+        if (user == null)
             return null;
-        User user1=userMapper.searchById(user.getUserId());
+        User user1 = userMapper.searchById(user.getUserId());
+        return user1;
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> users = userMapper.getAll();
+        return users;
+    }
+
+    @Override
+    public User searchUserByPwdAndUname(User user) {
+        User user1 = userMapper.searchByNameAndPwd(user);
         return user1;
     }
 }
