@@ -71,7 +71,7 @@ public class CartImpl implements CartService {
         /**
          * 新建订单并初始化个性数据
          */
-        OrderForm orderForm = new OrderForm(0, user1.getUserName(), address.getSpecificAddress(), temp, 1,
+        OrderForm orderForm = new OrderForm(0, user1.getUserName(), address.getSpecificAddress(), temp, "1",
                 timestamp, null, null, null);
         orderFormMapper.add(orderForm);
         /**

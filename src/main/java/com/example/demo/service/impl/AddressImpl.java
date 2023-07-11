@@ -25,11 +25,7 @@ public class AddressImpl implements AddressService {
 
     @Override
     public boolean save(Address address) {
-        try {
-            addressDao.add(address);
-        } catch (Exception e) {
-            return false;
-        }
+        addressDao.add(address);
         return true;
     }
 

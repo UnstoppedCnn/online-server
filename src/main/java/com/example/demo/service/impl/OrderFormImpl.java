@@ -3,10 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.*;
 import com.example.demo.entity.*;
 import com.example.demo.service.OrderFormService;
+import com.example.demo.vo.OrderDetailVO;
+import com.example.demo.vo.OrderFormVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,11 +38,35 @@ public class OrderFormImpl implements OrderFormService {
     }
 
     @Override
-    public OrderForm searchById(Integer id) {
+    public List<OrderFormVO> searchByUserName(String userName) {
+        List<OrderFormVO> orderFormVos = new ArrayList<>();
+        List<OrderDetailVO> orderDetailVOS = new ArrayList<>();
         OrderForm orderForm = new OrderForm();
-        orderForm.setOrderId(id);
+        orderForm.setUserName(userName);
         List<OrderForm> orderForms = orderFormMapper.searchanything(orderForm);
-        return orderForms.get(0);
+        OrderDetail orderDetail = new OrderDetail();
+        for (int i = 0; i < orderForms.size(); i++) {
+            orderDetail.setOrderId(orderForms.get(i).getOrderId());
+            OrderFormVO temp = new OrderFormVO();
+            temp.setOrderId(orderForms.get(i).getOrderId());
+            temp.setPrice(orderForms.get(i).getIntegral());
+            List<OrderDetail> orderDetails = orderDetailMapper.searchBySth(orderDetail);
+            for (int j = 0; j < orderDetails.size(); j++) {
+                Product product = new Product();
+                product.setProductId(orderDetail.getProductId());
+                Product product1 = productMapper.selectForFront(product);
+
+                OrderDetailVO orderDetailVO = new OrderDetailVO();
+                orderDetailVO.setBrand(product1.getBrand());
+                orderDetailVO.setColor(orderDetails.get(i).getColor());
+                orderDetailVO.setProductName(product1.getProductName());
+                orderDetailVO.setSize(orderDetails.get(i).getSize());
+
+                orderDetailVOS.add(orderDetailVO);
+            }
+            temp.setOrderDetailVOS(orderDetailVOS);
+        }
+        return orderFormVos;
     }
 
     @Override
@@ -146,6 +173,11 @@ public class OrderFormImpl implements OrderFormService {
                 productDetail.getSum(), Double.parseDouble(product1.getCurrentPrice()) * productDetail.getSum());
         orderDetailMapper.add(orderDetail);
         return true;
+    }
+
+    @Override
+    public OrderForm searchOrderFormByAnything(OrderForm orderForm) {
+        return orderFormMapper.searchanything(orderForm).get(0);
     }
 
 }

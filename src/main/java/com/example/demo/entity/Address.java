@@ -3,16 +3,15 @@ package com.example.demo.entity;
 public class Address {
 
 
-
-    private Integer address;
+    private Integer userId;
 
     private String consigneeName;
     private String consigneePhoneNumber;
     private String specificAddress;
     private Integer addressId;
 
-    public Address(Integer address, String consigneeName, String consigneePhoneNumber, String specificAddress, Integer addressId) {
-        this.address = address;
+    public Address(Integer userId, String consigneeName, String consigneePhoneNumber, String specificAddress, Integer addressId) {
+        this.userId = userId;
         this.consigneeName = consigneeName;
         this.consigneePhoneNumber = consigneePhoneNumber;
         this.specificAddress = specificAddress;
@@ -22,12 +21,12 @@ public class Address {
     public Address() {
     }
 
-    public Integer getAddress() {
-        return address;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAddress(Integer address) {
-        this.address = address;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getConsigneeName() {
@@ -65,7 +64,7 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "address=" + address +
+                "userId=" + userId +
                 ", consigneeName='" + consigneeName + '\'' +
                 ", consigneePhoneNumber='" + consigneePhoneNumber + '\'' +
                 ", specificAddress='" + specificAddress + '\'' +

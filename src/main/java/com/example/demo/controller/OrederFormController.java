@@ -1,17 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Address;
 import com.example.demo.entity.OrderForm;
 import com.example.demo.entity.ProductDetail;
 import com.example.demo.model.Model;
-import com.example.demo.service.OrderFormService;
 import com.example.demo.service.impl.OrderFormImpl;
+import com.example.demo.vo.OrderFormVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Api(tags = "订单状态管理")
 @RestController("/order")
@@ -22,10 +22,14 @@ public class OrederFormController {
 
     @CrossOrigin
     @PutMapping("/order")
-    @ApiOperation(value = "更新订单信息", notes = "根据json中的信息更新订单数据")
+    @ApiOperation(value = "更新订单信息", notes = "根据json中的信息更新订单数据，管理员更新订单状态")
     public Model update(@PathVariable OrderForm orderForm) {
-        Integer integer = orderForm.getOrderStatus();
-        OrderForm orderForm1 = orderFormImpl.searchById(orderForm.getOrderId());
+        if (orderForm.getOrderId() == null)
+            return new Model(0, "联系zzj阁下进行扣工资处分");
+
+        String integer = orderForm.getOrderStatus();
+        OrderForm orderForm1 = orderFormImpl.searchOrderFormByAnything(orderForm);
+
         if (orderForm1 == null)
             return new Model(-1, "未找到此订单");
         if (integer == null)
@@ -51,9 +55,21 @@ public class OrederFormController {
     @CrossOrigin
     @PostMapping("/order")
     @ApiOperation(value = "立即购买并生成订单", notes = "将当前选中的物品申城订单")
-    public Model createOrderByInstance(@RequestBody String userName, @RequestBody ProductDetail productDetail, @RequestBody int addressId) {
+    public Model createOrderByInstance(@RequestBody String userName, @RequestBody ProductDetail productDetail,
+                                       @RequestBody int addressId) {
         orderFormImpl.createOrderByInstance(userName, productDetail, addressId);
         return new Model<>(1, "删除成功");
+    }
+
+    @CrossOrigin
+    @GetMapping("/order/{userName}")
+    @ApiOperation(value = "查询订单（简略信息）", notes = "查询到当前用户下的所有订单")
+    public Model searchOrderByUserName(@PathVariable String userName) {
+        if (userName == null) {
+            return new Model(0, "请重新点击查询按钮");
+        }
+        List<OrderFormVO> orderFormVos = orderFormImpl.searchByUserName(userName);
+        return new Model<>(1, "找到如下订单信息", orderFormVos);
     }
 }
 

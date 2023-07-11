@@ -10,7 +10,7 @@ public interface AddressMapper {
     @Select("select addressId from address where addressId = #{addressId}")
     Address select(int addressId);
 
-    @Insert("INSERT INTO address (userId, consigneeName, consigneePhoneNumber, specificAddress) VALUES (#{userId},#{consigneeName},#{consigneePhoneNumber},#{specificAddress});")
+    @Insert("INSERT INTO address(addressId,userId, consigneeName, consigneePhoneNumber, specificAddress)  VALUES (null,#{userId},#{consigneeName},#{consigneePhoneNumber},#{specificAddress})")
     boolean add(Address address);
 
     @Update("update address set consigneeName=#{consigneeName},consigneePhoneNumber=#{consigneePhoneNumber},specificAddress=#{specificAddress} where addressId=#{addressId}")

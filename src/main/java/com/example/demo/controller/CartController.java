@@ -2,14 +2,19 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductDetail;
 import com.example.demo.model.Model;
 import com.example.demo.service.impl.CartImpl;
+import com.example.demo.service.impl.ProductDetailImpl;
+import com.example.demo.service.impl.ProductImpl;
+import com.example.demo.vo.CartOV;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "购物车管理")
@@ -17,15 +22,28 @@ import java.util.List;
 public class CartController {
     @Resource
     CartImpl cartImpl;
+    @Resource
+    ProductImpl productImpl;
+    @Resource
+    ProductDetailImpl productDetailImpl;
 
     @CrossOrigin
-    @GetMapping("/cart/{id}")
+    @GetMapping("/cart/{userId}")
     @ApiOperation(value = "获取购物车信息", notes = "根据url的id获取购物车中所有数据")
-    public Model getAll(@PathVariable String id) {
+    public Model getAll(@PathVariable String userId) {
+        List<CartOV> cartOVList = new ArrayList<>();
         //判断用户是否存在
-        Cart cart = new Cart(Integer.parseInt(id), null, null, null, null);
+        Cart cart = new Cart(Integer.parseInt(userId), null, null, null, null);
         List<Cart> carts = cartImpl.getCartInfo(cart);
-        return new Model(1, "查询成功", carts);
+        Product product = new Product();
+        for (int i = 0; i < carts.size(); i++) {
+            product.setProductId(carts.get(i).getProductId());
+            Product temp = productImpl.getProduct(product);
+            CartOV cartOV = new CartOV(String.valueOf(temp.getProductId()), carts.get(i).getSize(), carts.get(i).getSum()
+                    , carts.get(i).getColor(), Double.parseDouble(temp.getCurrentPrice()), temp.getProductImg(), temp.getProductName());
+            cartOVList.add(cartOV);
+        }
+        return new Model(1, "查询成功", cartOVList);
     }
 
     @CrossOrigin
@@ -38,7 +56,7 @@ public class CartController {
         ProductDetail productDetail = new ProductDetail();
         productDetail.setProductId(cart.getProductId());
         cartImpl.addProductToCart(cart, productDetail);
-        return new Model(-1, "插入成功");
+        return new Model(1, "插入成功");
     }
 
     @CrossOrigin

@@ -12,7 +12,7 @@ public class User {
 
     public User() {
     }
-
+    @JsonIgnore
     private String password;
     private String realName;
     private Integer sex;

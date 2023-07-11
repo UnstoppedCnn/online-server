@@ -27,12 +27,13 @@ public class AddressController {
     @ApiOperation(value = "获取用户地址", notes = "根据url的id来获取指定用户收货地址信息")
     public Model<List<Address>> getAll(@PathVariable String id) {
         if (id == null) {
-            return new Model<>(400, "请求错误");
+            return new Model<>(0, "请求错误");
         }
-        if (!addressService.select(Integer.parseInt(id))) {
-            return new Model<>(404, "没有地址信息");
+        List<Address> addresses = addressService.get(Integer.parseInt(id));
+        if (addresses.size() == 0) {
+            return new Model<>(0, "没有地址信息");
         }
-        return new Model<>(200, "成功", addressService.get(Integer.parseInt(id)));
+        return new Model<>(1, "成功", addressService.get(Integer.parseInt(id)));
     }
 
     @CrossOrigin
@@ -40,25 +41,25 @@ public class AddressController {
     @ApiOperation(value = "更新用户地址", notes = "更新地址信息")
     public Model<Address> update(@RequestBody Address address) {
         if (address == null) {
-            return new Model<>(400, "请求错误");
+            return new Model<>(0, "请求错误");
         }
         if (!addressService.update(address)) {
-            return new Model<>(500, "更新失败");
+            return new Model<>(0, "更新失败");
         }
-        return new Model<>(200, "成功");
+        return new Model<>(1, "成功");
     }
 
     @CrossOrigin
     @PostMapping("/address")
     @ApiOperation(value = "添加地址", notes = "添加用户的地址")
     public Model<Address> save(@RequestBody Address address) {
+        System.out.println(address.toString());
         if (address == null) {
-            return new Model<>(400, "请求错误");
+            return new Model<>(0, "请求错误");
         } else if (!addressService.save(address)) {
-            return new Model<>(500, "请求参数错误");
+            return new Model<>(0, "请求参数错误");
         }
-        addressService.save(address);
-        return new Model<>(200, "成功");
+        return new Model<>(1, "成功");
     }
 
     @CrossOrigin
@@ -66,11 +67,11 @@ public class AddressController {
     @ApiOperation(value = "删除地址", notes = "根据url的addressId来删除指定地址")
     public Model<Address> delete(@PathVariable String id) {
         if (id == null) {
-            return new Model<>(400, "请求错误");
+            return new Model<>(0, "请求错误");
         }
         if (!addressService.delete(Integer.parseInt(id))) {
-            return new Model<>(500, "删除失败");
+            return new Model<>(0, "删除失败");
         }
-        return new Model<>(200, "成功");
+        return new Model<>(1, "成功");
     }
 }

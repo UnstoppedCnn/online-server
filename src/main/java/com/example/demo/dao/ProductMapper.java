@@ -40,7 +40,7 @@ public interface ProductMapper {
 
     //删除
     @Delete("delete from product where productId=#{productId}")
-     int delete(Product product);
+    int delete(Product product);
 
 
     //更新

@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.sql.Timestamp;
 
 public class OrderForm {
@@ -11,7 +9,7 @@ public class OrderForm {
     private String userName;
     private String shippingAddress;
     private Integer integral;
-    private Integer orderStatus;
+    private String orderStatus;
 
     private Timestamp creationTime;
 
@@ -23,7 +21,7 @@ public class OrderForm {
     private Timestamp removalTime;
     private Timestamp endTime;
 
-    public OrderForm(Integer orderId, String userName, String shippingAddress, Integer integral, Integer orderStatus, Timestamp creationTime, Timestamp paymentTime, Timestamp removalTime, Timestamp endTime) {
+    public OrderForm(Integer orderId, String userName, String shippingAddress, Integer integral, String orderStatus, Timestamp creationTime, Timestamp paymentTime, Timestamp removalTime, Timestamp endTime) {
         this.orderId = orderId;
         this.userName = userName;
         this.shippingAddress = shippingAddress;
@@ -67,11 +65,11 @@ public class OrderForm {
         this.integral = integral;
     }
 
-    public Integer getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 

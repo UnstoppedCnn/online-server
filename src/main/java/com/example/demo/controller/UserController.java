@@ -31,6 +31,14 @@ public class UserController {
         if (!Objects.equals(user1.getPassword(), user.getPassword())) {
             return new Model(-1, "输入密码有误");
         }
+        System.out.println("""
+                 db    db .d8888. d88888b d8888b.   db       .d88b.   d888b  d888888b d8b   db\s
+                 88    88 88'  YP 88'     88  `8D   88      .8P  Y8. 88' Y8b   `88'   888o  88\s
+                 88    88 `8bo.   88ooooo 88oobY'   88      88    88 88         88    88V8o 88\s
+                 88    88   `Y8b. 88~~~~~ 88`8b     88      88    88 88  ooo    88    88 V8o88\s
+                 88b  d88 db   8D 88.     88 `88.   88booo. `8b  d8' 88. ~8~   .88.   88  V888\s
+                 ~Y8888P' `8888Y' Y88888P 88   YD   Y88888P  `Y88P'   Y888P  Y888888P VP   V8P \
+                """);
         return new Model(1, "登陆成功", user1);
     }
 
@@ -53,13 +61,24 @@ public class UserController {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if (user == null)
             return new Model(-1, "请输入正确的信息");
-        User user1 = userImpl.searchUserByPwdAndUname(user);
+        User user1 = userImpl.searchUser(user);
         if (user1 != null)
             return new Model(-1, "该账号已经存在");
         user.setCreationTime(timestamp);
         user.setUpdateTime(timestamp);
         userImpl.userRegister(user);
         User user2 = userImpl.searchUserByPwdAndUname(user);
+        System.out.println("""
+                                                                 _     _           \s
+                                                                (_)   | |          \s
+                            _   _ ___  ___ _ __   _ __ ___  __ _ _ ___| |_ ___ _ __\s
+                           | | | / __|/ _ \\ '__| | '__/ _ \\/ _` | / __| __/ _ \\ '__|
+                           | |_| \\__ \\  __/ |    | | |  __/ (_| | \\__ \\ ||  __/ |  \s
+                            \\__,_|___/\\___|_|    |_|  \\___|\\__, |_|___/\\__\\___|_|  \s
+                                                            __/ |                  \s
+                                                           |___/                   \s
+                                
+                """);
         return new Model(1, "注册成功，祝您有个良好的购物体验", user2);
     }
 

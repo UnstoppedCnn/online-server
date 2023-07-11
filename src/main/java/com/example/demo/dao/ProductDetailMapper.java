@@ -10,13 +10,11 @@ import java.util.List;
 public interface ProductDetailMapper {
     @Insert("insert into productdetail(productId,size,color,sum) values(#{productId},#{size},#{color},#{sum})")
     int insertProductDetail(ProductDetail pd);
-
-    //    @Delete("delete productdetail where productId=#{productId}")
+//    @Delete("delete productdetail where productId=#{productId}")
 //    int deleteProductDetail(ProductDetail pd);
     @Update("update productdetail set sum=#{sum},size=#{size},color=#{color} where productId=#{productId} and " +
             "color=#{color} and size=#{size}")
     int updateProductDetail(ProductDetail pd);
-
     @Delete("<script>" +
             "delete from productdetail " +
             "where productId=#{productId}" +
