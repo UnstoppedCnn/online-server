@@ -55,6 +55,7 @@ public class UserController {
     @PostMapping("/user")
     @ApiOperation(value = "添加用户", notes = "根据user对象来创建用户")
     public Model save(@RequestBody User user) {
+        System.out.println(user.toString());
         if (user.getUserName() == null || user.getPassword() == null) {
             return new Model(0, "请输入正确的信息");
         }

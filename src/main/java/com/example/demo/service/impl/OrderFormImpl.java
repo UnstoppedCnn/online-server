@@ -61,10 +61,11 @@ public class OrderFormImpl implements OrderFormService {
                 orderDetailVO.setColor(orderDetails.get(i).getColor());
                 orderDetailVO.setProductName(product1.getProductName());
                 orderDetailVO.setSize(orderDetails.get(i).getSize());
+                orderDetailVO.setNum(orderDetails.get(i).getProductQuantity());
 
                 orderDetailVOS.add(orderDetailVO);
             }
-            temp.setOrderDetailVOS(orderDetailVOS);
+            temp.setProductList(orderDetailVOS);
         }
         return orderFormVos;
     }

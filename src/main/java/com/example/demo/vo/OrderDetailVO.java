@@ -5,6 +5,7 @@ public class OrderDetailVO {
     String brand;
     Integer size;
     String color;
+    Integer num;
 
     public String getProductName() {
         return productName;
@@ -38,11 +39,20 @@ public class OrderDetailVO {
         this.color = color;
     }
 
-    public OrderDetailVO(String productName, String brand, Integer size, String color) {
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public OrderDetailVO(String productName, String brand, Integer size, String color, Integer num) {
         this.productName = productName;
         this.brand = brand;
         this.size = size;
         this.color = color;
+        this.num = num;
     }
 
     public OrderDetailVO() {
