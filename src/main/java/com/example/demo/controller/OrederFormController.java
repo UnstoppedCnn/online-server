@@ -27,16 +27,16 @@ public class OrederFormController {
         if (orderForm.getOrderId() == null)
             return new Model(0, "联系zzj阁下进行扣工资处分");
 
-        String integer = orderForm.getOrderStatus();
+        String status = orderForm.getOrderStatus();
         OrderForm orderForm1 = orderFormImpl.searchOrderFormByAnything(orderForm);
 
         if (orderForm1 == null)
             return new Model(-1, "未找到此订单");
-        if (integer == null)
+        if (status == null)
             return new Model(-1, "请确认输入的操作是否正确");
-        else if (integer == 2)
+        else if (status == "2")
             orderForm.setPaymentTime(timestamp);
-        else if (integer == 3)
+        else if (status == "3")
             orderForm.setRemovalTime(timestamp);
         else
             orderForm.setEndTime(timestamp);
